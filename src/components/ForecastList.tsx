@@ -7,6 +7,7 @@ interface ForecastListProps {
   forecasts: DailyForecast[]
   lastUpdated: Date | null
   onRefresh: () => void
+  temperatureUnit: 'celsius' | 'fahrenheit'
 }
 
 function formatTime(date: Date): string {
@@ -16,7 +17,7 @@ function formatTime(date: Date): string {
   })
 }
 
-export function ForecastList({ forecasts, lastUpdated, onRefresh }: ForecastListProps) {
+export function ForecastList({ forecasts, lastUpdated, onRefresh, temperatureUnit }: ForecastListProps) {
   const today = new Date().toISOString().split('T')[0]
 
   return (
@@ -46,6 +47,7 @@ export function ForecastList({ forecasts, lastUpdated, onRefresh }: ForecastList
             key={forecast.date}
             forecast={forecast}
             isToday={forecast.date === today}
+            temperatureUnit={temperatureUnit}
           />
         ))}
       </div>
@@ -55,7 +57,11 @@ export function ForecastList({ forecasts, lastUpdated, onRefresh }: ForecastList
         <div className="flex gap-4" style={{ width: 'max-content' }}>
           {forecasts.map((forecast) => (
             <div key={forecast.date} className="min-w-[100px]">
-              <ForecastCard forecast={forecast} isToday={forecast.date === today} />
+              <ForecastCard
+                forecast={forecast}
+                isToday={forecast.date === today}
+                temperatureUnit={temperatureUnit}
+              />
             </div>
           ))}
         </div>

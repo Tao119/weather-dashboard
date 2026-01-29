@@ -6,11 +6,29 @@ import { getWeatherInfo } from '@/lib/weatherCodes'
 interface CurrentWeatherProps {
   city: City
   data: CurrentWeatherData
+  temperatureUnit: 'celsius' | 'fahrenheit'
+  onDetailedReportClick: () => void
+  onForecastHistoryClick: () => void
 }
 
-export function CurrentWeather({ city, data }: CurrentWeatherProps) {
+function convertTemp(celsius: number, unit: 'celsius' | 'fahrenheit'): number {
+  if (unit === 'fahrenheit') {
+    return Math.round((celsius * 9) / 5 + 32)
+  }
+  return Math.round(celsius)
+}
+
+export function CurrentWeather({
+  city,
+  data,
+  temperatureUnit,
+  onDetailedReportClick,
+  onForecastHistoryClick,
+}: CurrentWeatherProps) {
   const weatherInfo = getWeatherInfo(data.weatherCode)
-  const feelsLike = Math.round(data.temperature + 2)
+  const temp = convertTemp(data.temperature, temperatureUnit)
+  const feelsLike = convertTemp(data.temperature + 2, temperatureUnit)
+  const unit = temperatureUnit === 'celsius' ? '°C' : '°F'
 
   return (
     <section className="mb-10">
@@ -28,25 +46,31 @@ export function CurrentWeather({ city, data }: CurrentWeatherProps) {
           </div>
 
           <h1 className="text-6xl md:text-7xl font-bold text-white mt-4">
-            {Math.round(data.temperature)}°C
+            {temp}{unit}
           </h1>
 
           <div className="flex flex-col gap-1 mt-2">
             <p className="text-xl md:text-2xl font-semibold text-white">{city.name}, Japan</p>
             <p className="text-text-secondary text-base md:text-lg">
-              {weatherInfo.label} • Feels like {feelsLike}°C
+              {weatherInfo.label} • Feels like {feelsLike}{unit}
             </p>
           </div>
 
           {/* Action Buttons */}
           <div className="flex gap-4 mt-6 md:mt-8 justify-center md:justify-start">
-            <button className="bg-primary hover:bg-primary/80 transition-all text-white px-6 md:px-8 py-3 rounded-xl font-semibold shadow-lg shadow-primary/30 flex items-center gap-2 text-sm md:text-base">
+            <button
+              onClick={onDetailedReportClick}
+              className="bg-primary hover:bg-primary/80 transition-all text-white px-6 md:px-8 py-3 rounded-xl font-semibold shadow-lg shadow-primary/30 flex items-center gap-2 text-sm md:text-base"
+            >
               Detailed Report
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </button>
-            <button className="glass-card glass-card-hover text-white px-6 md:px-8 py-3 rounded-xl font-semibold transition-all text-sm md:text-base">
+            <button
+              onClick={onForecastHistoryClick}
+              className="glass-card glass-card-hover text-white px-6 md:px-8 py-3 rounded-xl font-semibold transition-all text-sm md:text-base"
+            >
               Forecast History
             </button>
           </div>

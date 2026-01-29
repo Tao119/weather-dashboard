@@ -2,13 +2,26 @@
 
 import type { City } from '@/types/weather'
 import { cities } from '@/lib/cities'
+import { NotificationsDropdown } from './NotificationsDropdown'
+import { SettingsDropdown } from './SettingsDropdown'
 
 interface HeaderProps {
   selectedCity: City
   onCityChange: (city: City) => void
+  onGetLocation: () => void
+  isGeoLoading: boolean
+  temperatureUnit: 'celsius' | 'fahrenheit'
+  onTemperatureUnitChange: (unit: 'celsius' | 'fahrenheit') => void
 }
 
-export function Header({ selectedCity, onCityChange }: HeaderProps) {
+export function Header({
+  selectedCity,
+  onCityChange,
+  onGetLocation,
+  isGeoLoading,
+  temperatureUnit,
+  onTemperatureUnitChange,
+}: HeaderProps) {
   return (
     <header className="flex items-center justify-between whitespace-nowrap px-6 md:px-10 py-6 max-w-[1280px] w-full mx-auto">
       <div className="flex items-center gap-6 md:gap-12">
@@ -49,10 +62,22 @@ export function Header({ selectedCity, onCityChange }: HeaderProps) {
               </select>
             </div>
           </label>
-          <button className="flex h-11 w-11 items-center justify-center glass-card rounded-xl text-white hover:bg-white/10 transition-all">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" />
-            </svg>
+          <button
+            onClick={onGetLocation}
+            disabled={isGeoLoading}
+            className="flex h-11 w-11 items-center justify-center glass-card rounded-xl text-white hover:bg-white/10 transition-all disabled:opacity-50"
+            title="Get current location"
+          >
+            {isGeoLoading ? (
+              <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" />
+              </svg>
+            )}
           </button>
         </div>
       </div>
@@ -74,16 +99,11 @@ export function Header({ selectedCity, onCityChange }: HeaderProps) {
 
         {/* Action Buttons - Desktop */}
         <div className="hidden md:flex gap-2">
-          <button className="flex h-11 w-11 items-center justify-center glass-card rounded-xl text-white hover:bg-white/10 transition-all">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
-            </svg>
-          </button>
-          <button className="flex h-11 w-11 items-center justify-center glass-card rounded-xl text-white hover:bg-white/10 transition-all">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
-            </svg>
-          </button>
+          <NotificationsDropdown />
+          <SettingsDropdown
+            temperatureUnit={temperatureUnit}
+            onTemperatureUnitChange={onTemperatureUnitChange}
+          />
         </div>
 
         {/* User Avatar */}

@@ -6,6 +6,7 @@ import { getWeatherInfo } from '@/lib/weatherCodes'
 interface ForecastCardProps {
   forecast: DailyForecast
   isToday?: boolean
+  temperatureUnit: 'celsius' | 'fahrenheit'
 }
 
 function getDayOfWeek(dateString: string): string {
@@ -14,9 +15,18 @@ function getDayOfWeek(dateString: string): string {
   return days[date.getDay()]
 }
 
-export function ForecastCard({ forecast, isToday = false }: ForecastCardProps) {
+function convertTemp(celsius: number, unit: 'celsius' | 'fahrenheit'): number {
+  if (unit === 'fahrenheit') {
+    return Math.round((celsius * 9) / 5 + 32)
+  }
+  return Math.round(celsius)
+}
+
+export function ForecastCard({ forecast, isToday = false, temperatureUnit }: ForecastCardProps) {
   const weatherInfo = getWeatherInfo(forecast.weatherCode)
   const dayOfWeek = getDayOfWeek(forecast.date)
+  const maxTemp = convertTemp(forecast.temperatureMax, temperatureUnit)
+  const minTemp = convertTemp(forecast.temperatureMin, temperatureUnit)
 
   return (
     <div
@@ -35,9 +45,9 @@ export function ForecastCard({ forecast, isToday = false }: ForecastCardProps) {
         {weatherInfo.icon}
       </span>
       <div className="text-center">
-        <p className="text-xl font-bold">{Math.round(forecast.temperatureMax)}°</p>
+        <p className="text-xl font-bold">{maxTemp}°</p>
         <p className="text-text-secondary text-sm font-medium">
-          {Math.round(forecast.temperatureMin)}°
+          {minTemp}°
         </p>
       </div>
       <p className="text-xs text-text-secondary font-medium uppercase">{weatherInfo.label}</p>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkyCast - Dashboard Error</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1313ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101022",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.125);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .gradient-bg {
+            background: radial-gradient(circle at top left, #2e1065, #101022),
+                        linear-gradient(to bottom right, #1313ec, #6b21ff);
+            background-blend-mode: overlay;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white min-h-screen flex flex-col overflow-x-hidden">
+<div class="fixed inset-0 gradient-bg -z-10"></div>
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar Component -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 px-6 md:px-10 py-3 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z"></path>
+</svg>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">SkyCast</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-9">
+<a class="text-white/70 hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Dashboard</a>
+<a class="text-white/70 hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Forecast</a>
+<a class="text-white/70 hover:text-white text-sm font-medium leading-normal transition-colors" href="#">Radar</a>
+<a class="text-white/70 hover:text-white text-sm font-medium leading-normal transition-colors" href="#">History</a>
+</div>
+<div class="flex gap-2">
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-xl bg-white/10 text-white hover:bg-white/20 transition-all">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-xl bg-white/10 text-white hover:bg-white/20 transition-all">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu Icon -->
+<div class="md:hidden">
+<span class="material-symbols-outlined">menu</span>
+</div>
+</header>
+<main class="flex-1 flex items-center justify-center p-6">
+<div class="layout-content-container flex flex-col max-w-[480px] w-full">
+<!-- Centered Glassmorphism Card -->
+<div class="glass-card rounded-xl p-8 md:p-12 flex flex-col items-center text-center gap-8">
+<!-- Custom Sad Cloud Icon -->
+<div class="relative">
+<div class="absolute inset-0 blur-2xl bg-primary/30 rounded-full"></div>
+<div class="relative flex items-center justify-center size-24 md:size-32 text-white/80">
+<span class="material-symbols-outlined text-[80px] md:text-[110px]" style="font-variation-settings: 'FILL' 0, 'wght' 200;">
+                                cloud_off
+                            </span>
+</div>
+</div>
+<!-- Text Content -->
+<div class="flex flex-col gap-3">
+<h1 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Unable to load weather data</h1>
+<p class="text-white/60 text-base font-normal leading-relaxed max-w-[320px] mx-auto">
+                            We're having trouble reaching the weather station. Please check your connection or try again.
+                        </p>
+</div>
+<!-- CTA Button -->
+<button class="group flex min-w-[160px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/25">
+<span class="truncate">Try again</span>
+<span class="material-symbols-outlined ml-2 text-sm group-hover:rotate-180 transition-transform duration-500">refresh</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Footer Component -->
+<footer class="flex flex-col gap-6 px-5 py-10 text-center @container mt-auto">
+<div class="flex flex-wrap items-center justify-center gap-6 @[480px]:flex-row @[480px]:justify-around">
+<a class="text-[#9d9db9] hover:text-white text-sm font-normal leading-normal min-w-40 transition-colors" href="#">Support</a>
+<a class="text-[#9d9db9] hover:text-white text-sm font-normal leading-normal min-w-40 transition-colors" href="#">Privacy Policy</a>
+<a class="text-[#9d9db9] hover:text-white text-sm font-normal leading-normal min-w-40 transition-colors" href="#">Report an issue</a>
+</div>
+<p class="text-[#9d9db9]/60 text-xs font-normal leading-normal">© 2024 SkyCast Weather. All rights reserved.</p>
+</footer>
+</div>
+</body></html>

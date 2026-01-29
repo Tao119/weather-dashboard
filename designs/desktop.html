@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WeatherGlass - Modern Weather Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1313ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101022",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background: linear-gradient(135deg, #101022 0%, #1a1a3a 50%, #1313ec 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card-hover:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="font-display text-white overflow-x-hidden">
+<div class="relative flex min-h-screen w-full flex-col group/design-root">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Header Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap px-10 py-6 max-w-[1280px] w-full mx-auto">
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-3 text-white">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white">cloud_queue</span>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-[-0.015em]">WeatherGlass</h2>
+</div>
+<!-- City Selector -->
+<div class="flex items-center gap-4">
+<label class="flex flex-col min-w-[280px] h-11">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full glass-card">
+<div class="text-[#9d9db9] flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:ring-0 text-white placeholder:text-[#9d9db9] px-4 text-sm font-normal" placeholder="Search city..." value="Tokyo, Japan"/>
+</div>
+</label>
+<button class="flex h-11 w-11 items-center justify-center glass-card rounded-xl text-white">
+<span class="material-symbols-outlined text-[20px]">near_me</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="flex items-center gap-8">
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-[#9d9db9] text-sm font-medium hover:text-white transition-colors" href="#">Maps</a>
+<a class="text-[#9d9db9] text-sm font-medium hover:text-white transition-colors" href="#">Air Quality</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex h-11 w-11 items-center justify-center glass-card rounded-xl text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex h-11 w-11 items-center justify-center glass-card rounded-xl text-white">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-11 border-2 border-primary/50" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC8Y3ocOO6ptq4yDhmcwg8IMeomp8RAgi2myZd5SE1g4f6-d4y5vqBAuSL0v5ZuKjYqriCM-KkSHlkF9AHsEcjYOMKLmCtf1wO8cgIWfji2t7GCxfNpfaAtJYZFfpqkLKL9pGPirDqnGEX5mmCLChyU3WWxcXXyvysvnVSHoYcK2kdhq363BEAhejwgRV5v_iREm_REBSh-cCCdptQVoV68NhXe5ZRApKxmhGVz3MGwcSZJ8werjQw-n1_ZwoO_a6US2lIMYvCuDzs");'></div>
+</div>
+</header>
+<main class="flex-1 px-10 py-4 max-w-[1280px] w-full mx-auto">
+<!-- Current Weather Hero Card -->
+<section class="mb-10">
+<div class="glass-card rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-8 min-h-[320px] relative overflow-hidden">
+<!-- Background Decorative Element -->
+<div class="absolute -top-24 -right-24 size-64 bg-primary/20 blur-[100px] rounded-full"></div>
+<div class="flex flex-col gap-2 z-10">
+<div class="flex items-center gap-2 text-[#9d9db9]">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<p class="text-sm font-medium uppercase tracking-widest">Current Weather</p>
+</div>
+<h1 class="text-7xl font-bold text-white mt-4">24°C</h1>
+<div class="flex flex-col gap-1 mt-2">
+<p class="text-2xl font-semibold text-white">Tokyo, Japan</p>
+<p class="text-[#9d9db9] text-lg">Partly Cloudy • Feels like 26°C</p>
+</div>
+<div class="flex gap-4 mt-8">
+<button class="bg-primary hover:bg-primary/80 transition-all text-white px-8 py-3 rounded-xl font-semibold shadow-lg shadow-primary/30 flex items-center gap-2">
+                                    Detailed Report <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="glass-card-hover glass-card text-white px-8 py-3 rounded-xl font-semibold transition-all">
+                                    Forecast History
+                                </button>
+</div>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center z-10">
+<span class="material-symbols-outlined text-[160px] text-white opacity-90 drop-shadow-2xl">partly_cloudy_day</span>
+</div>
+<div class="grid grid-cols-2 gap-6 min-w-[300px] z-10">
+<div class="glass-card p-5 rounded-xl flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-primary">water_drop</span>
+<p class="text-[#9d9db9] text-xs font-medium uppercase">Humidity</p>
+<p class="text-xl font-bold">65%</p>
+</div>
+<div class="glass-card p-5 rounded-xl flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-primary">air</span>
+<p class="text-[#9d9db9] text-xs font-medium uppercase">Wind Speed</p>
+<p class="text-xl font-bold">12 km/h</p>
+</div>
+<div class="glass-card p-5 rounded-xl flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-primary">wb_sunny</span>
+<p class="text-[#9d9db9] text-xs font-medium uppercase">UV Index</p>
+<p class="text-xl font-bold">4 of 11</p>
+</div>
+<div class="glass-card p-5 rounded-xl flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-primary">compress</span>
+<p class="text-[#9d9db9] text-xs font-medium uppercase">Pressure</p>
+<p class="text-xl font-bold">1012 hPa</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 7-Day Forecast Section -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-2xl font-bold text-white tracking-tight">7-Day Forecast</h2>
+<div class="flex gap-2">
+<span class="text-sm text-[#9d9db9]">Last updated: 10:45 AM</span>
+<span class="material-symbols-outlined text-[#9d9db9] text-sm">refresh</span>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-4">
+<!-- Monday -->
+<div class="glass-card glass-card-hover rounded-xl p-6 flex flex-col items-center gap-4 transition-all group">
+<p class="text-[#9d9db9] font-medium">Mon</p>
+<span class="material-symbols-outlined text-4xl text-white group-hover:scale-110 transition-transform">wb_sunny</span>
+<div class="text-center">
+<p class="text-xl font-bold">22°</p>
+<p class="text-[#9d9db9] text-sm font-medium">18°</p>
+</div>
+<p class="text-xs text-[#9d9db9] font-medium uppercase">Sunny</p>
+</div>
+<!-- Tuesday -->
+<div class="glass-card glass-card-hover rounded-xl p-6 flex flex-col items-center gap-4 transition-all group">
+<p class="text-[#9d9db9] font-medium">Tue</p>
+<span class="material-symbols-outlined text-4xl text-white group-hover:scale-110 transition-transform">cloud</span>
+<div class="text-center">
+<p class="text-xl font-bold">23°</p>
+<p class="text-[#9d9db9] text-sm font-medium">17°</p>
+</div>
+<p class="text-xs text-[#9d9db9] font-medium uppercase">Cloudy</p>
+</div>
+<!-- Wednesday -->
+<div class="glass-card glass-card-hover rounded-xl p-6 flex flex-col items-center gap-4 transition-all group border-primary/30">
+<p class="text-white font-medium">Wed</p>
+<span class="material-symbols-outlined text-4xl text-primary group-hover:scale-110 transition-transform">rainy</span>
+<div class="text-center">
+<p class="text-xl font-bold">21°</p>
+<p class="text-[#9d9db9] text-sm font-medium">16°</p>
+</div>
+<p class="text-xs text-[#9d9db9] font-medium uppercase">Rain</p>
+</div>
+<!-- Thursday -->
+<div class="glass-card glass-card-hover rounded-xl p-6 flex flex-col items-center gap-4 transition-all group">
+<p class="text-[#9d9db9] font-medium">Thu</p>
+<span class="material-symbols-outlined text-4xl text-white group-hover:scale-110 transition-transform">wb_sunny</span>
+<div class="text-center">
+<p class="text-xl font-bold">24°</p>
+<p class="text-[#9d9db9] text-sm font-medium">19°</p>
+</div>
+<p class="text-xs text-[#9d9db9] font-medium uppercase">Sunny</p>
+</div>
+<!-- Friday -->
+<div class="glass-card glass-card-hover rounded-xl p-6 flex flex-col items-center gap-4 transition-all group">
+<p class="text-[#9d9db9] font-medium">Fri</p>
+<span class="material-symbols-outlined text-4xl text-white group-hover:scale-110 transition-transform">clear_day</span>
+<div class="text-center">
+<p class="text-xl font-bold">25°</p>
+<p class="text-[#9d9db9] text-sm font-medium">20°</p>
+</div>
+<p class="text-xs text-[#9d9db9] font-medium uppercase">Clear</p>
+</div>
+<!-- Saturday -->
+<div class="glass-card glass-card-hover rounded-xl p-6 flex flex-col items-center gap-4 transition-all group">
+<p class="text-[#9d9db9] font-medium">Sat</p>
+<span class="material-symbols-outlined text-4xl text-white group-hover:scale-110 transition-transform">partly_cloudy_day</span>
+<div class="text-center">
+<p class="text-xl font-bold">22°</p>
+<p class="text-[#9d9db9] text-sm font-medium">18°</p>
+</div>
+<p class="text-xs text-[#9d9db9] font-medium uppercase">P. Cloudy</p>
+</div>
+<!-- Sunday -->
+<div class="glass-card glass-card-hover rounded-xl p-6 flex flex-col items-center gap-4 transition-all group">
+<p class="text-[#9d9db9] font-medium">Sun</p>
+<span class="material-symbols-outlined text-4xl text-white group-hover:scale-110 transition-transform">water_drop</span>
+<div class="text-center">
+<p class="text-xl font-bold">20°</p>
+<p class="text-[#9d9db9] text-sm font-medium">15°</p>
+</div>
+<p class="text-xs text-[#9d9db9] font-medium uppercase">Showers</p>
+</div>
+</div>
+</section>
+<!-- Additional Info Grid -->
+<section class="mt-10 grid grid-cols-3 gap-6 pb-12">
+<div class="glass-card rounded-xl p-6 col-span-2">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-lg">Precipitation Map</h3>
+<button class="text-primary text-sm font-bold flex items-center gap-1">
+                                Full Map <span class="material-symbols-outlined text-xs">open_in_new</span>
+</button>
+</div>
+<div class="w-full h-48 bg-center bg-cover rounded-lg border border-white/5" data-alt="Satellite weather map of Tokyo area" data-location="Tokyo, Japan" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC5tMIbhZZ1zODRWe-VSHuAPl5pFhcwbaWmEh0yvXZIA2vi4rLpvmg1T3YcZOqvt2Fa0HO6VjRhUQAuFSBgsg8cbt2YR4r7NNlJ4kbTDehp30m5Lq_SRMbfVp2wZVH2wrAtmJqE6LEPtsTZWdMY9NbkgpbePHZQyovOkeX7bWw8wNbf2uFjs3Dowu8W12VWe-jDIUJTGpND1xU-vxePwR8Uvc4lJW81pmGnE6B_yebMpjbWVNTg5v62H6Rd8_huH4SWyR2vAa9F2KQ");'></div>
+</div>
+<div class="glass-card rounded-xl p-6">
+<h3 class="font-bold text-lg mb-4">Sun &amp; Moon</h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">light_mode</span>
+<div>
+<p class="text-xs text-[#9d9db9] uppercase">Sunrise</p>
+<p class="font-bold">06:12 AM</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs text-[#9d9db9] uppercase">Sunset</p>
+<p class="font-bold">06:45 PM</p>
+</div>
+</div>
+<div class="h-[1px] bg-white/10 w-full"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">brightness_2</span>
+<div>
+<p class="text-xs text-[#9d9db9] uppercase">Moon Phase</p>
+<p class="font-bold">Waxing Gibbous</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs text-[#9d9db9] uppercase">Visibility</p>
+<p class="font-bold">88%</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+</div>
+</body></html>

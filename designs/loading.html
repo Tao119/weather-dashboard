@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1313ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101022",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .skeleton {
+            background: linear-gradient(90deg, #282839 25%, #3a3a4e 50%, #282839 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        body {
+            background: radial-gradient(circle at top right, #1313ec33, transparent), 
+                        radial-gradient(circle at bottom left, #7c3aed33, transparent),
+                        #101022;
+        }
+    </style>
+</head>
+<body class="font-display text-white min-h-screen">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation -->
+<div class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 px-4 py-3 glass rounded-xl mb-6">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-white">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white">cloud</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] hidden sm:block">WeatherGlass</h2>
+</div>
+<!-- Search Bar Skeleton -->
+<div class="hidden md:flex w-64 h-10 skeleton rounded-xl opacity-40"></div>
+</div>
+<div class="flex flex-1 justify-end gap-4">
+<div class="flex gap-2">
+<div class="size-10 skeleton rounded-xl opacity-40"></div>
+<div class="size-10 skeleton rounded-xl opacity-40"></div>
+</div>
+<div class="size-10 skeleton rounded-full opacity-60"></div>
+</div>
+</header>
+<main class="space-y-6">
+<!-- Location & Date Header -->
+<div class="px-4">
+<div class="h-8 w-48 skeleton rounded-lg mb-2"></div>
+<div class="h-4 w-32 skeleton rounded-lg opacity-40"></div>
+</div>
+<!-- Main Hero Glass Card -->
+<div class="p-4">
+<div class="glass rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-8 min-h-[300px]">
+<div class="flex flex-col gap-4 items-center md:items-start w-full md:w-auto">
+<div class="h-24 w-48 skeleton rounded-xl"></div>
+<div class="h-6 w-32 skeleton rounded-lg opacity-50"></div>
+<div class="flex gap-3 mt-4">
+<div class="h-10 w-24 skeleton rounded-lg opacity-30"></div>
+<div class="h-10 w-24 skeleton rounded-lg opacity-30"></div>
+</div>
+</div>
+<div class="relative flex items-center justify-center">
+<div class="size-48 md:size-64 skeleton rounded-full opacity-20"></div>
+<div class="absolute size-32 md:size-40 skeleton rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Secondary Stats Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 px-4">
+<div class="glass p-4 rounded-xl flex flex-col gap-3">
+<div class="size-8 skeleton rounded-lg opacity-40"></div>
+<div class="h-4 w-16 skeleton rounded-md opacity-30"></div>
+<div class="h-6 w-20 skeleton rounded-md"></div>
+</div>
+<div class="glass p-4 rounded-xl flex flex-col gap-3">
+<div class="size-8 skeleton rounded-lg opacity-40"></div>
+<div class="h-4 w-16 skeleton rounded-md opacity-30"></div>
+<div class="h-6 w-20 skeleton rounded-md"></div>
+</div>
+<div class="glass p-4 rounded-xl flex flex-col gap-3">
+<div class="size-8 skeleton rounded-lg opacity-40"></div>
+<div class="h-4 w-16 skeleton rounded-md opacity-30"></div>
+<div class="h-6 w-20 skeleton rounded-md"></div>
+</div>
+<div class="glass p-4 rounded-xl flex flex-col gap-3">
+<div class="size-8 skeleton rounded-lg opacity-40"></div>
+<div class="h-4 w-16 skeleton rounded-md opacity-30"></div>
+<div class="h-6 w-20 skeleton rounded-md"></div>
+</div>
+</div>
+<!-- Forecast Section Header -->
+<div class="px-4 pt-4">
+<div class="h-7 w-40 skeleton rounded-lg"></div>
+</div>
+<!-- 7-Day Forecast Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3 p-4">
+<!-- Day 1 -->
+<div class="glass p-4 rounded-xl flex flex-col items-center gap-4">
+<div class="h-4 w-12 skeleton rounded-md opacity-50"></div>
+<div class="size-12 skeleton rounded-full"></div>
+<div class="flex gap-2">
+<div class="h-4 w-8 skeleton rounded-md"></div>
+<div class="h-4 w-8 skeleton rounded-md opacity-30"></div>
+</div>
+</div>
+<!-- Day 2 -->
+<div class="glass p-4 rounded-xl flex flex-col items-center gap-4">
+<div class="h-4 w-12 skeleton rounded-md opacity-50"></div>
+<div class="size-12 skeleton rounded-full"></div>
+<div class="flex gap-2">
+<div class="h-4 w-8 skeleton rounded-md"></div>
+<div class="h-4 w-8 skeleton rounded-md opacity-30"></div>
+</div>
+</div>
+<!-- Day 3 -->
+<div class="glass p-4 rounded-xl flex flex-col items-center gap-4">
+<div class="h-4 w-12 skeleton rounded-md opacity-50"></div>
+<div class="size-12 skeleton rounded-full"></div>
+<div class="flex gap-2">
+<div class="h-4 w-8 skeleton rounded-md"></div>
+<div class="h-4 w-8 skeleton rounded-md opacity-30"></div>
+</div>
+</div>
+<!-- Day 4 -->
+<div class="glass p-4 rounded-xl flex flex-col items-center gap-4">
+<div class="h-4 w-12 skeleton rounded-md opacity-50"></div>
+<div class="size-12 skeleton rounded-full"></div>
+<div class="flex gap-2">
+<div class="h-4 w-8 skeleton rounded-md"></div>
+<div class="h-4 w-8 skeleton rounded-md opacity-30"></div>
+</div>
+</div>
+<!-- Day 5 -->
+<div class="glass p-4 rounded-xl flex flex-col items-center gap-4">
+<div class="h-4 w-12 skeleton rounded-md opacity-50"></div>
+<div class="size-12 skeleton rounded-full"></div>
+<div class="flex gap-2">
+<div class="h-4 w-8 skeleton rounded-md"></div>
+<div class="h-4 w-8 skeleton rounded-md opacity-30"></div>
+</div>
+</div>
+<!-- Day 6 -->
+<div class="glass p-4 rounded-xl flex flex-col items-center gap-4">
+<div class="h-4 w-12 skeleton rounded-md opacity-50"></div>
+<div class="size-12 skeleton rounded-full"></div>
+<div class="flex gap-2">
+<div class="h-4 w-8 skeleton rounded-md"></div>
+<div class="h-4 w-8 skeleton rounded-md opacity-30"></div>
+</div>
+</div>
+<!-- Day 7 -->
+<div class="glass p-4 rounded-xl flex flex-col items-center gap-4">
+<div class="h-4 w-12 skeleton rounded-md opacity-50"></div>
+<div class="size-12 skeleton rounded-full"></div>
+<div class="flex gap-2">
+<div class="h-4 w-8 skeleton rounded-md"></div>
+<div class="h-4 w-8 skeleton rounded-md opacity-30"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Loading Message Footer -->
+<footer class="flex justify-center py-10">
+<div class="flex items-center gap-3 glass px-6 py-2 rounded-full">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<p class="text-sm font-medium text-white/60">Fetching weather data...</p>
+</div>
+</footer>
+</div>
+</div>
+</div>
+</body></html>

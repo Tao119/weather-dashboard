@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap');
+
+body {
+  background: linear-gradient(135deg, #101022 0%, #1a1a3a 50%, #1313ec 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, #282839 25%, #3a3a4e 50%, #282839 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite linear;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Mobile gradient variant */
+@media (max-width: 768px) {
+  body {
+    background: linear-gradient(135deg, #1e1b4b 0%, #1313ec 50%, #4f46e5 100%);
+    background-attachment: fixed;
+  }
+}
